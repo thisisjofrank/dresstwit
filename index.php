@@ -169,6 +169,8 @@ $values = (object) [
 
 $valencode = json_encode($values);
 $valdecode = json_decode($valencode, true);
+$my_file = 'colour.json';
+
 
 if ($http_code === 200) { // if everything's good
 	$response = strip_tags($connection->response['response']);
@@ -178,13 +180,12 @@ if ($http_code === 200) { // if everything's good
 	foreach($values as $key => $value) {
 		if (strpos($text, $key) !== false) {
 			echo $valdecode[$value];
+			$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
 			fwrite($handle, $valdecode[$value]);
 		}
 	}
 	
-$my_file = 'colour.json';
-$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
-fwrite($handle, $data);
+
 
 } else {
 	echo "Error ID=> ",$http_code, "<br>\n";
